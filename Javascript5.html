@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Form Validation</title>
+    <style>
+		body{
+			font-weight: bold;
+		}
+		#myForm label{
+			display: inline-block;
+			width: 100px;
+			text-align: right;
+		}
+		#contact_submit{
+			padding-left: 100px;
+		}
+		#myForm div{
+			margin-top: 1em;
+		}
+		textarea{
+			vertical-align: top;
+			height: 5em;
+		}
+        .error {
+            color: red;
+            font-size: 12px;
+        }
+
+        input.error-border, textarea.error-border {
+            border: 2px solid red;
+        }
+		
+    </style>
+</head>
+<body>
+    <form id="myForm" onsubmit="return validateForm()">
+        <div>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name">
+            <span id="nameError" class="error"></span>
+        </div>
+
+        <div>
+            <label for="email">Email:</label>
+            <input type="text" id="email" name="email">
+            <span id="emailError" class="error"></span>
+        </div>
+
+        <div>
+            <label for="website">Website:</label>
+            <input type="text" id="website" name="website">
+            <span id="websiteError" class="error"></span>
+        </div>
+
+        <div>
+            <label for="message">Message:</label>
+            <textarea id="message" name="message"></textarea>
+            <span id="messageError" class="error"></span>
+        </div>
+		<div id="contact_submit">
+			<button type="submit">Submit</button>
+		</div>
+    </form>
+
+    <script>
+        function validateForm() {
+            // Reset error messages and borders
+            clearErrors();
+
+            var isValid = true;
+
+            // Validate Name
+            var name = document.getElementById("name").value;
+            if (!name) {
+                isValid = false;
+                document.getElementById("nameError").textContent = "This field is required";
+                document.getElementById("name").classList.add("error-border");
+            }
+
+            // Validate Email
+            var email = document.getElementById("email").value;
+            if (!email || !isValidEmail(email)) {
+                isValid = false;
+                document.getElementById("emailError").textContent = "A valid email address is required";
+                document.getElementById("email").classList.add("error-border");
+            }
+
+            // Validate Website
+            var website = document.getElementById("website").value;
+            if (!website || !isValidURL(website)) {
+                isValid = false;
+                document.getElementById("websiteError").textContent = "A valid URL is required";
+                document.getElementById("website").classList.add("error-border");
+            }
+
+            // Validate Message
+            var message = document.getElementById("message").value;
+            if (!message) {
+                isValid = false;
+                document.getElementById("messageError").textContent = "This field is required";
+                document.getElementById("message").classList.add("error-border");
+            }
+
+            return isValid;
+        }
+
+        function clearErrors() {
+            var errorElements = document.getElementsByClassName("error");
+            var inputElements = document.querySelectorAll(".error-border");
+
+            for (var i = 0; i < errorElements.length; i++) {
+                errorElements[i].textContent = "";
+            }
+
+            for (var i = 0; i < inputElements.length; i++) {
+                inputElements[i].classList.remove("error-border");
+            }
+        }
+
+        function isValidEmail(email) {
+            // Basic email validation regex (you can use a more comprehensive one)
+            var emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+            return emailRegex.test(email);
+        }
+
+        function isValidURL(url) {
+            // Basic URL validation regex (you can use a more comprehensive one)
+            var urlRegex = /^(http(s)?:\/\/)?(www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}(\/*)?$/;
+            return urlRegex.test(url);
+        }
+    </script>
+</body>
+</html>

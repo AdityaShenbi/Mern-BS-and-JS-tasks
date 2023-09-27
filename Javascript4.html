@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="button" value="show date" onclick="showdate()">
+    <p id="date"></p>
+    <input type="button" value="show Time" onclick="showtime()">
+    <p id="time"></p>
+    <script>
+        function showdate() {
+            var currentDate = new Date();
+            var day = currentDate.getDate();
+            var month = currentDate.toLocaleDateString('en-US', { month: 'long' });
+            var year = currentDate.getFullYear();
+            var formattedDate = day + "/" + month + "/" + year;
+            document.getElementById("date").textContent = formattedDate;
+        }
+
+        function showtime() {
+            var currentDate = new Date();
+            var dayOfWeek = currentDate.toLocaleString('en-US', { weekday: 'short' });
+            var month = currentDate.toLocaleString('en-US', { month: 'short' });
+            var day = currentDate.getDate();
+            var year = currentDate.getFullYear();
+            var hours = currentDate.getHours();
+            var minutes = currentDate.getMinutes();
+            var seconds = currentDate.getSeconds();
+            var timeZone = currentDate.toString().match(/\(([^)]+)\)/)[1];
+
+            var timeString = `${dayOfWeek} ${month} ${day} ${year} ${hours}:${minutes}:${seconds} GMT+0530 (${timeZone})`;
+
+            document.getElementById("time").textContent = timeString;
+        }
+
+
+        // Optionally, you can set intervals to update the date and time periodically
+        setInterval(showDate, 1000); // Update the date every 1000 milliseconds (1 second)
+        setInterval(showTime, 1000); // Update the time every 1000 milliseconds (1 second)
+    </script>
+</body>
+</html>
